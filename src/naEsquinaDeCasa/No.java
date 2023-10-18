@@ -1,15 +1,16 @@
 package naEsquinaDeCasa;
 
 public class No {
-	public int dado;
+	public Cliente cliente;
 	public No direita;
 	public No esquerda;
+	public int altura;
 
 	public No() {
 	}
 
-	public void setDado(int dado) {
-		this.dado = dado;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public void setEsquerda(No esquerda) {
@@ -19,9 +20,13 @@ public class No {
 	public void setDireita(No direita) {
 		this.direita = direita;
 	}
+	
+	public void setAltura(int altura) {
+		this.altura = altura;
+	}
 
-	public int getDado() {
-		return dado;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
 	public No getDireita() {
@@ -30,5 +35,9 @@ public class No {
 
 	public No getEsquerda() {
 		return esquerda;
+	}
+	
+	public int getAltura() {
+		return altura;
 	}
 }
