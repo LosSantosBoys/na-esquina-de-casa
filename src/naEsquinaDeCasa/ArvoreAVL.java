@@ -1,30 +1,29 @@
 package naEsquinaDeCasa;
 
 public class ArvoreAVL {
-	public No inserir(No node, int dado) {
-		if (node == null) {
-			node = new No();
+	public No raiz;
 
-			node.dado = dado;
-			node.esquerda = null;
-			node.direita = null;
-		} else if (dado < node.dado) {
-			node.esquerda = inserir(node.esquerda, dado);
-		} else {
-			node.direita = inserir(node.direita, dado);
-		}
-
-		return node;
+	public void inserir(Cliente cliente) {
+		raiz = inserirNo(raiz, cliente);
 	}
 
-	public int retiraEmOrdem(No root, int i, int vetor[]) {
-		if (root != null) {
-			i = retiraEmOrdem(root.esquerda, i, vetor);
-			vetor[i] = root.dado;
-			i++;
-			i = retiraEmOrdem(root.direita, i, vetor);
+	public No inserirNo(No no, Cliente cliente) {
+		if (no == null) {
+			no = new No();
+
+			no.cliente = cliente;
+			no.esquerda = null;
+			no.direita = null;
 		}
-		
-		return i;
+
+        int comparacao = cliente.getCpf().compareTo(no.cliente.getCpf());
+
+        if (comparacao < 0) {
+            no.esquerda = inserirNo(no.esquerda, cliente);
+        } else if (comparacao > 0) {
+            no.direita = inserirNo(no.direita, cliente);
+        }
+
+		return no;
 	}
 }
