@@ -5,12 +5,6 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		DataManager dataManager = new DataManager();
-
-		Dados dados = new Dados(dataManager);
-		// Formulario form = new Formulario(dataManager);
-		
-		/*
 		ArrayList<Cliente> listaClientes = new ArrayList<>();
 		Scanner scanner = new Scanner(System.in);
 		boolean continuar = true;
@@ -37,26 +31,23 @@ public class Main {
 			Cliente cliente = new Cliente(nomeCompleto, dataNascimento, contatoTelefonico, email, endereco, cpf);
 			listaClientes.add(cliente);
 
-			System.out.println("Deseja cadastrar outro cliente? (S/n): ");
+			System.out
+					.println("Deseja cadastrar outro cliente? (S para cadastrar, P para pesquisar, ou N para sair): ");
 			String resposta = scanner.nextLine();
 
 			if (resposta.equalsIgnoreCase("n")) {
 				continuar = false;
+			} else if (resposta.equalsIgnoreCase("p")) {
+				realizarPesquisa(listaClientes, scanner);
 			}
 		}
-		
-		
 
 		scanner.close();
-		*/
-		
-		
-		
 	}
 
 	public static Cliente buscarPorCpf(ArrayList<Cliente> listaClientes, String cpf) {
 		for (Cliente cliente : listaClientes) {
-			if (cliente.getCpf().equals(cpf)) {
+			if (cliente.getCpf().startsWith(cpf)) {
 				return cliente;
 			}
 		}
@@ -67,10 +58,46 @@ public class Main {
 	public static ArrayList<Cliente> buscarPorNome(ArrayList<Cliente> listaClientes, String nome) {
 		ArrayList<Cliente> clientesEncontrados = new ArrayList<>();
 		for (Cliente cliente : listaClientes) {
-			if (cliente.getNomeCompleto().equalsIgnoreCase(nome)) {
+			if (cliente.getNomeCompleto().startsWith(nome.toLowerCase())) {
 				clientesEncontrados.add(cliente);
 			}
 		}
 		return clientesEncontrados;
+	}
+
+	public static void realizarPesquisa(ArrayList<Cliente> listaClientes, Scanner scanner) {
+		System.out.println("Escolha a opção de pesquisa: ");
+		System.out.println("1. Pesquisar por CPF");
+		System.out.println("2. Pesquisar por nome");
+		int opcao = scanner.nextInt();
+		scanner.nextLine();
+
+		switch (opcao) {
+		case 1:
+			System.out.println("Digite o CPF para pesquisa: ");
+			String cpf = scanner.nextLine();
+			Cliente clienteEncontrado = buscarPorCpf(listaClientes, cpf);
+			if (clienteEncontrado != null) {
+				System.out.println("Cliente encontrado: " + clienteEncontrado.getNomeCompleto());
+			} else {
+				System.out.println("Cliente não encontrado.");
+			}
+			break;
+		case 2:
+			System.out.print("Digite o nome para pesquisa: ");
+			String nome = scanner.nextLine();
+			ArrayList<Cliente> clientesEncontrados = buscarPorNome(listaClientes, nome);
+			if (!clientesEncontrados.isEmpty()) {
+				System.out.println("Clientes encontrados por nome:");
+				for (Cliente cliente : clientesEncontrados) {
+					System.out.println(cliente.getNomeCompleto());
+				}
+			} else {
+				System.out.println("Nenhum cliente encontrado por nome.");
+			}
+			break;
+		default:
+			System.out.println("Opção inválida.");
+		}
 	}
 }
